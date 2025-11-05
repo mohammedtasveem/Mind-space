@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Check-In - Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-lavender-100 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100 font-sans transition-all duration-500">
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto"></div>
+            <p class="mt-4 text-lg">Taking a deep breath...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md z-40">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-blue-600">MindfulCheck</h1>
+            <button id="theme-toggle" class="p-2 rounded-full bg-gray-200 dark:bg-gray-700">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-20 min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div class="absolute inset-0 bg-wave opacity-20 animate-pulse"></div>
+        <div class="text-center z-10">
+            <h2 class="text-5xl font-bold mb-4">Check Your Mental Well-Being Today</h2>
+            <p class="text-xl mb-8">Your journey to calm starts here.</p>
+            <div class="space-x-4">
+                <a href="stress.html" class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition">Take Stress Test</a>
+                <a href="motivation.html" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition">Get Motivated</a>
+                <a href="calm.html" class="bg-purple-500 hover:bg-purple-600 text-white px-6 py-3 rounded-lg transition">Find Calm</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Navigation -->
+    <footer class="fixed bottom-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md z-40">
+        <nav class="flex justify-around py-2">
+            <a href="index.html" class="p-2 hover:text-blue-500">Home</a>
+            <a href="about.html" class="p-2 hover:text-blue-500">About</a>
+            <a href="stress.html" class="p-2 hover:text-blue-500">Stress</a>
+            <a href="tips.html" class="p-2 hover:text-blue-500">Tips</a>
+            <a href="motivation.html" class="p-2 hover:text-blue-500">Motivate</a>
+            <a href="focus.html" class="p-2 hover:text-blue-500">Focus</a>
+            <a href="calm.html" class="p-2 hover:text-blue-500">Calm</a>
+            <a href="journal.html" class="p-2 hover:text-blue-500">Journal</a>
+            <a href="dashboard.html" class="p-2 hover:text-blue-500">Dashboard</a>
+            <a href="feedback.html" class="p-2 hover:text-blue-500">Feedback</a>
+        </nav>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
