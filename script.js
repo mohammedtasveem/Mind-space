@@ -82,20 +82,86 @@ function generateQuote() {
 
 // Pomodoro Timer (for focus.html)
 if (window.location.pathname.includes('focus.html')) {
-    let time = 1500, interval;
-    function startTimer() {
-        interval = setInterval(() => {
-            time--;
-            document.getElementById('timer').textContent = `${Math.floor(time / 60)}:${(time % 60).toString().padStart(2, '0')}`;
-            if (time <= 0) clearInterval(interval);
-        }, 1000);
+    // DOM elements
+    // Pomodoro Timer (for focus.html)
+    const timerEl = document.getElementById('timer');
+    const startBtn = document.getElementById('startBtn');
+    const musicSelect = document.getElementById('music');
+    const lofiAudio = document.getElementById('lofiAudio');
+
+    let timer = null;
+    let timeLeft = 25 * 60;
+    let isRunning = false;
+
+    function formatTime(seconds) {
+      const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+      const s = String(seconds % 60).padStart(2, '0');
+      return `${m}:${s}`;
     }
+
+    function updateTimerDisplay() {
+      timerEl.textContent = formatTime(timeLeft);
+    }
+
+    function startTimer() {
+      if (isRunning) return;
+      isRunning = true;
+      startBtn.disabled = true;
+      startBtn.textContent = "Running...";
+
+      if (musicSelect.value === 'lofi') {
+        lofiAudio.play().catch((e) => {
+          console.log('Audio play prevented by browser:', e);
+        });
+      }
+
+      timer = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          isRunning = false;
+          startBtn.disabled = false;
+          startBtn.textContent = "Start Pomodoro";
+          if (musicSelect.value === 'lofi') {
+            lofiAudio.pause();
+            lofiAudio.currentTime = 0;
+          }
+          alert("Pomodoro session complete! Take a break.");
+          timeLeft = 25 * 60;
+          updateTimerDisplay();
+          return;
+        }
+        timeLeft--;
+        updateTimerDisplay();
+      }, 1000);
+    }
+
+    startBtn.addEventListener('click', startTimer);
+
+    musicSelect.addEventListener('change', () => {
+      if (musicSelect.value === 'lofi' && isRunning) {
+        lofiAudio.play().catch((e) => {
+          console.log('Audio play prevented:', e);
+        });
+      } else {
+        lofiAudio.pause();
+        lofiAudio.currentTime = 0;
+      }
+    });
+
+    updateTimerDisplay();
 }
 
 // Calm Sounds (for calm.html)
-function playSound(type) {
-    // Placeholder: In real code, load audio from assets/
-    alert('Playing calming sounds... (Add audio files to assets/)');
+function playSound() {
+    const audio = document.getElementById('calmSound');
+    if (audio.paused) {
+        audio.play().catch(error => {
+            alert('Auto-play was prevented by your browser. Please interact with the page and try again.');
+            console.error(error);
+        });
+    } else {
+        audio.pause();
+    }
 }
 
 // Journal (for journal.html)
@@ -140,4 +206,102 @@ if (window.location.pathname.includes('feedback.html')) {
         document.getElementById('comments').innerHTML = comments.map(c => `<div class="p-4 bg-white dark:bg-gray-800 rounded">${c.date}: ${c.text}</div>`).join('');
     }
     loadComments();
+    const audio = document.getElementById('calmSound');
+const playBtn = document.getElementById('playBtn');
+
+function playSound() {
+  if (audio.paused) {
+    audio.play()
+      .then(() => {
+        playBtn.textContent = "Pause Calming Sounds";
+      })
+      .catch((error) => {
+        alert('Auto-play was prevented by your browser. Please interact with the page and try again.');
+        console.error(error);
+      });
+  } else {
+    audio.pause();
+    playBtn.textContent = "Play Calming Sounds";
+  }
+}
+// DOM elements
+const timerEl = document.getElementById('timer');
+const startBtn = document.getElementById('startBtn');
+const musicSelect = document.getElementById('music');
+const lofiAudio = document.getElementById('lofiAudio');
+
+let timer; // interval reference
+let timeLeft = 25 * 60; // 25 minutes in seconds
+let isRunning = false;
+
+// Format time as mm:ss
+function formatTime(seconds) {
+  const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+  const s = String(seconds % 60).padStart(2, '0');
+  return `${m}:${s}`;
+}
+
+function updateTimerDisplay() {
+  timerEl.textContent = formatTime(timeLeft);
+}
+
+function startTimer() {
+  if (isRunning) return; // Prevent multiple timers
+  isRunning = true;
+  startBtn.disabled = true;
+  startBtn.textContent = "Running...";
+
+  // Play music if Lo-Fi selected and user interaction given
+  if (musicSelect.value === 'lofi') {
+    lofiAudio.play().catch((e) => {
+      console.log('Audio play prevented by browser:', e);
+    });
+  }
+
+  timer = setInterval(() => {
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      isRunning = false;
+      startBtn.disabled = false;
+      startBtn.textContent = "Start Pomodoro";
+
+      // Stop music at end of timer
+      if (musicSelect.value === 'lofi') {
+        lofiAudio.pause();
+        lofiAudio.currentTime = 0;
+      }
+      alert("Pomodoro session complete! Take a break.");
+      timeLeft = 25 * 60;
+      updateTimerDisplay();
+      return;
+    }
+
+    timeLeft--;
+    updateTimerDisplay();
+  }, 1000);
+}
+
+// Listen for Start button click
+startBtn.addEventListener('click', startTimer);
+
+// Handle music selection changes
+musicSelect.addEventListener('change', () => {
+  if (musicSelect.value === 'lofi' && isRunning) {
+    lofiAudio.play().catch((e) => {
+      console.log('Audio play prevented:', e);
+    });
+  } else {
+    lofiAudio.pause();
+    lofiAudio.currentTime = 0;
+  }
+});
+
+// Initialize timer display on page load
+updateTimerDisplay();
+
+// OPTIONAL: Theme toggle handling (if using your theme toggle button)
+const themeToggle = document.getElementById('theme-toggle');
+themeToggle.addEventListener('click', () => {
+  document.documentElement.classList.toggle('dark');
+});
 }
